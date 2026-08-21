@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Landing Page</title>
+  <style>
+    :root {
+      --bg-color: #f7f7f7;
+      --text-color: #111111;
+      --accent-yellow: rgba(234, 255, 0, 0.85);
+      --highlight-yellow: #f1f833;
+      --card-bg: #ececec;
+      --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Persistent Navigation Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      max-width: 1300px;
+      margin: 0 auto;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-decoration: none;
+      color: var(--text-color);
+    }
+
+    header.dark-nav .logo,
+    header.dark-nav nav a {
+      color: #ffffff;
+    }
+
+    .logo-icon {
+      font-size: 24px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 15px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 0.7;
+    }
+
+    .btn-primary {
+      background-color: #000000;
+      color: #ffffff !important;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    header.dark-nav .btn-primary {
+      background-color: #ffffff;
+      color: #000000 !important;
+    }
+
+    .btn-primary:hover {
+      background-color: #222222;
+    }
+
+    /* Interactive Mouse Follower Glow */
+    .mouse-glow {
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-yellow) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Fullscreen Page Sections */
+    .page-section {
+      width: 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 80px 40px 20px 40px;
+    }
+
+    .container {
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Page 1: Hero Section */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .hero-text {
+      flex: 1;
+      max-width: 550px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #777777;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .title {
+      font-size: 52px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-image-container {
+      flex: 1;
+      max-width: 600px;
+    }
+
+    .hero-image-container img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Page 2: Projects Showcase */
+    .projects-section {
+      background-color: #050505;
+      color: #ffffff;
+      padding: 0;
+      overflow-y: auto;
+    }
+
+    .projects-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .projects-header {
+      padding: 100px 60px 40px 60px;
+      border-bottom: 1px solid #222222;
+    }
+
+    .projects-header h2 {
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .projects-header p {
+      color: #aaaaaa;
+      font-size: 16px;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .project-row {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      border-bottom: 1px solid #222222;
+      min-height: 220px;
+    }
+
+    .project-left {
+      padding: 40px;
+      border-right: 1px solid #222222;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .project-cat {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #666666;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .project-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .project-right {
+      padding: 40px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .project-tag {
+      position: absolute;
+      top: 30px;
+      right: 60px;
+      background-color: #1a1a1a;
+      color: #dddddd;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 4px;
+    }
+
+    .project-desc {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #cccccc;
+      max-width: 700px;
+      margin-bottom: 24px;
+    }
+
+    .btn-case {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--highlight-yellow);
+      color: #000000;
+      padding: 14px 28px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      width: fit-content;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-case:hover {
+      background-color: #e2eb12;
+      transform: translateY(-2px);
+    }
+
+    /* Page 3: Lower Grid Section */
+    .grid-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card-img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-short { height: 220px; }
+    .img-tall { height: 360px; }
+
+    .stat-card {
+      background-color: var(--card-bg);
+      padding: 24px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat-number {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #666;
+      font-weight: 600;
+    }
+
+    /* Page 4: Service Descriptions Section */
+    .text-section {
+      max-width: 850px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .text-block h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      color: var(--text-color);
+    }
+
+    .text-block p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333333;
+      font-weight: 400;
+    }
+
+    /* Page 5: Horizontal Metrics Banner Section */
+    .stats-banner {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .metric-card {
+      flex: 1;
+      height: 220px;
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric-card.yellow { background-color: var(--highlight-yellow); }
+
+    .metric-tag {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #666666;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .metric-card.yellow .metric-tag { color: #555550; }
+
+    .metric-value {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #111111;
+      display: flex;
+      align-items: baseline;
+    }
+
+    .metric-value span { font-weight: 400; }
+
+    /* Page 6: DE TECHNOLOGY Section */
+    .tech-banner-container {
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      padding: 60px 40px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .tech-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      color: #111111;
+      font-family: monospace, var(--font-family);
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .tech-card {
+      background-color: #ffffff;
+      border-radius: 6px;
+      padding: 24px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #222222;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .tech-icon {
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Page 7: Dark Hero Section */
+    .dark-section {
+      background-color: #000000;
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    .dark-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      height: 100%;
+    }
+
+    .dark-title {
+      font-size: 56px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
+      color: #ffffff;
+      max-width: 900px;
+      z-index: 2;
+    }
+
+    .ambient-glow {
+      position: absolute;
+      top: 10%;
+      right: 25%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(234, 255, 0, 0.9) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Page 8: Footer / Reference Layout Section */
+    .footer-section {
+      background-color: #f7f7f7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-glow {
+      position: absolute;
+      left: -150px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-yellow) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 60px;
+      position: relative;
+      z-index: 2;
+      align-items: start;
+    }
+
+    .footer-left h2 {
+      font-size: 52px;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      color: #111111;
+      max-width: 450px;
+    }
+
+    .footer-meta {
+      display: flex;
+      gap: 60px;
+    }
+
+    .meta-group h4 {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #777777;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .meta-group p, .meta-group a {
+      font-size: 15px;
+      color: #111111;
+      text-decoration: none;
+      font-weight: 600;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .meta-group a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-col-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111111;
+      margin-bottom: 20px;
+    }
+
+    .social-links-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      list-style: none;
+    }
+
+    .social-link-item a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #333333;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .social-link-item a:hover {
+      color: #000000;
+      transform: translateX(4px);
+    }
+
+    .social-icon {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Corner Marks */
+    .corner-mark {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-color: #cccccc;
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .top-left { top: 15px; left: 15px; border-width: 1px 0 0 1px; }
+    .bottom-right { bottom: 15px; right: 15px; border-width: 0 1px 1px 0; }
+
+    @media (max-width: 900px) {
+      html { scroll-snap-type: none; }
+      .page-section { height: auto; min-height: 100vh; padding-top: 100px; }
+      .hero, .footer-grid { grid-template-columns: 1fr; flex-direction: column; }
+      .project-row { grid-template-columns: 1fr; }
+      .project-left { border-right: none; border-bottom: 1px solid #222222; padding: 24px; }
+      .project-right { padding: 24px; }
+      .project-tag { position: relative; top: 0; right: 0; display: inline-block; margin-bottom: 12px; }
+      .title, .dark-title, .footer-left h2, .projects-header h2 { font-size: 34px; }
+      .grid-section { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-banner { flex-direction: column; }
+      header { padding: 20px; }
+      nav { gap: 16px; }
+      .footer-meta { flex-direction: column; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Glow Element -->
+  <div class="mouse-glow" id="glow"></div>
+
+  <!-- Decorative Corner Marks -->
+  <div class="corner-mark top-left"></div>
+  <div class="corner-mark bottom-right"></div>
+
+  <!-- Persistent Navigation Bar -->
+  <header id="navbar">
+    <a href="#" class="logo">
+      <span class="logo-icon">⁚%</span> wink
+    </a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn-primary">Get started</a>
+    </nav>
+  </header>
+
+  <!-- Page 1: Hero -->
+  <section class="page-section">
+    <div class="container hero">
+      <div class="hero-text">
+        <div class="subtitle">ABOUT US</div>
+        <h1 class="title">WIJ ZIJN DE KLIK TUSSEN JOU EN JE KLANT</h1>
+      </div>
+      <div class="hero-image-container">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Team working on laptops">
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 2: Featured Projects Section -->
+  <section class="page-section projects-section" id="work">
+    <div class="projects-container">
+      <div class="projects-header">
+        <h2>FEATURED PROJECTS</h2>
+        <p>Explore some of the applications, platforms, and intelligent software systems built with full-stack technologies. Direct links to source code and documentation available below.</p>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project-row">
+        <div class="project-left">
+          <div class="project-cat">Sagne Dev / Web Application</div>
+          <div class="project-name">Visit Wolaita</div>
+        </div>
+        <div class="project-right">
+          <span class="project-tag">WEB PLATFORM</span>
+          <p class="project-desc">A comprehensive tourism and culture web platform showcasing the rich heritage, destinations, and experiences of Wolaita.</p>
+          <a href="https://github.com/sagne-dev/visit-wolaita" target="_blank" rel="noopener noreferrer" class="btn-case">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-row">
+        <div class="project-left">
+          <div class="project-cat">Sagne Dev / Real-Time Tool</div>
+          <div class="project-name">Collaborative Dashboard</div>
+        </div>
+        <div class="project-right">
+          <span class="project-tag">SAAS TOOL</span>
+          <p class="project-desc">An interactive real-time collaborative whiteboard tool for teams to brainstorm, sketch, and manage tasks simultaneously.</p>
+          <a href="https://github.com/sagne-dev/collaborative-whiteboard" target="_blank" rel="noopener noreferrer" class="btn-case">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-row">
+        <div class="project-left">
+          <div class="project-cat">Sagne Dev / AI Platform</div>
+          <div class="project-name">AI Study Assistant</div>
+        </div>
+        <div class="project-right">
+          <span class="project-tag">ARTIFICIAL INTELLIGENCE</span>
+          <p class="project-desc">An intelligent study companion utilizing artificial intelligence to create summaries, quizzes, and personalized learning materials.</p>
+          <a href="https://github.com/sagne-dev/ai-study-assistant" target="_blank" rel="noopener noreferrer" class="btn-case">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-row">
+        <div class="project-left">
+          <div class="project-cat">Sagne Dev / E-Commerce</div>
+          <div class="project-name">Food Delivery Web App</div>
+        </div>
+        <div class="project-right">
+          <span class="project-tag">BUSINESS SOFTWARE</span>
+          <p class="project-desc">Full-featured online food ordering and delivery web platform with live order tracking and seamless payment integration.</p>
+          <a href="https://github.com/sagne-dev/Food_Delivery_web" target="_blank" rel="noopener noreferrer" class="btn-case">
+            View on GitHub →
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 5: All Repositories -->
+      <div class="project-row">
+        <div class="project-left">
+          <div class="project-cat">Sagne Dev / Repositories</div>
+          <div class="project-name">More Projects</div>
+        </div>
+        <div class="project-right">
+          <span class="project-tag">GITHUB PROFILE</span>
+          <p class="project-desc">Discover dozens of other open-source tools, backend services, and interactive web tools directly on GitHub.</p>
+          <a href="https://github.com/sagne-dev" target="_blank" rel="noopener noreferrer" class="btn-case">
+            Explore All on GitHub →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Page 3: Photo Grid -->
+  <section class="page-section">
+    <div class="container">
+      <div class="grid-section">
+        <div class="column">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Person working at desk" class="card-img img-short">
+          <div class="stat-card">
+            <div class="stat-number">300+</div>
+            <div class="stat-label">COMPLETED PROJECTS</div>
+          </div>
+        </div>
+
+        <div class="column">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" alt="Team meeting" class="card-img img-tall">
+        </div>
+
+        <div class="column">
+          <div class="stat-card">
+            <div class="stat-number">6 CREATIVE</div>
+            <div class="stat-label">TEAM MEMBERS</div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80" alt="Office interaction" class="card-img img-short">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 4: Service Descriptions -->
+  <section class="page-section" id="solutions">
+    <div class="container text-section">
+      <div class="text-block">
+        <h2>ONTWERPERS VAN SLIMME SOFTWARE</h2>
+        <p>
+          We design smart software solutions for our clients to make their businesses more efficient, data-aware, 
+          and optimized. What do we strive for? Setting up smart systems that help our clients move forward 
+          and pay for themselves immediately.
+        </p>
+      </div>
+
+      <div class="text-block">
+        <h2>ONTWERPERS VAN WAARDEVOLLE WEBSITES</h2>
+        <p>
+          We design websites that are accessible to all visitors while simultaneously looking simple and great. 
+          Decisive and clear. Straightforward; that is when websites become valuable in our view.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 5: Metrics Cards -->
+  <section class="page-section">
+    <div class="container">
+      <div class="stats-banner">
+        <div class="metric-card">
+          <div class="metric-tag">TODAY IN SHOPPING<br>APPS</div>
+          <div class="metric-value">2,814<span>users</span></div>
+        </div>
+
+        <div class="metric-card yellow">
+          <div class="metric-tag">INFRASTRUCTURE</div>
+          <div class="metric-value">35<span>servers</span></div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-tag">ACTIVE IN<br>MANAGEMENT</div>
+          <div class="metric-value">50+<span>applications</span></div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-tag">ACTIVE IN<br>MANAGEMENT</div>
+          <div class="metric-value">200+<span>websites</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 6: DE TECHNOLOGY Section -->
+  <section class="page-section">
+    <div class="container">
+      <div class="tech-banner-container">
+        <h2 class="tech-title">DE TECHNOLOGY</h2>
+        <div class="tech-grid">
+          <div class="tech-card"><span class="tech-icon">🌐</span> HTML5</div>
+          <div class="tech-card"><span class="tech-icon">🎨</span> CSS3</div>
+          <div class="tech-card"><span class="tech-icon">⚡</span> JavaScript</div>
+          <div class="tech-card"><span class="tech-icon">⚛️</span> React</div>
+          <div class="tech-card"><span class="tech-icon">📘</span> TypeScript</div>
+          <div class="tech-card"><span class="tech-icon">🟢</span> Node.js</div>
+          <div class="tech-card"><span class="tech-icon">🚂</span> Express</div>
+          <div class="tech-card"><span class="tech-icon">🍃</span> MongoDB</div>
+          <div class="tech-card"><span class="tech-icon">🐘</span> PostgreSQL</div>
+          <div class="tech-card"><span class="tech-icon">⚡</span> Supabase</div>
+          <div class="tech-card"><span class="tech-icon">🐙</span> Git / GitHub</div>
+          <div class="tech-card"><span class="tech-icon">💻</span> VS Code</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Page 7: Dark Section -->
+  <section class="page-section dark-section">
+    <div class="ambient-glow"></div>
+    <div class="container dark-content">
+      <h1 class="dark-title">MENGEN ACHTER DE KLIK</h1>
+    </div>
+  </section>
+
+  <!-- Page 8: Contact & Social Handles (Reference Image Design) -->
+  <section class="page-section footer-section" id="contact">
+    <div class="footer-glow"></div>
+    <div class="container footer-grid">
+      
+      <!-- Left Heading & Primary Contact -->
+      <div class="footer-left">
+        <h2>THERE IS MORE THAN MEETS THE EYE</h2>
+        <div class="footer-meta">
+          <div class="meta-group">
+            <h4>CONTACT</h4>
+            <a href="mailto:sagneboss427@gmail.com">sagneboss427@gmail.com</a>
+            <p style="margin-top: 4px; color: #555;">Sagne Mieso</p>
+          </div>
+          <div class="meta-group">
+            <h4>LOCATION</h4>
+            <p>Full-Stack Developer</p>
+            <p>Remote / Global</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Links / Social Media Handles -->
+      <div class="footer-center">
+        <div class="footer-col-title">Connect</div>
+        <ul class="social-links-list">
+          <!-- GitHub -->
+          <li class="social-link-item">
+            <a href="https://github.com/sagne-dev" target="_blank" rel="noopener noreferrer">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub (sagne-dev)
+            </a>
+          </li>
+
+          <!-- LinkedIn -->
+          <li class="social-link-item">
+            <a href="https://www.linkedin.com/in/sagne-mieso-3ba60a341?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+              LinkedIn (Sagne Mieso)
+            </a>
+          </li>
+
+          <!-- Telegram -->
+          <li class="social-link-item">
+            <a href="https://t.me/sa_gne" target="_blank" rel="noopener noreferrer">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 7.551l-2.03 9.57c-.15.68-.55.84-1.12.52l-3.1-2.29-1.5 1.44c-.16.16-.3.3-.61.3l.22-3.14 5.72-5.17c.25-.22-.05-.34-.38-.12l-7.07 4.45-3.04-.95c-.66-.21-.67-.66.14-.98l11.88-4.58c.55-.2 1.03.13.89.95z"/></svg>
+              Telegram (@sa_gne)
+            </a>
+          </li>
+
+          <!-- Instagram -->
+          <li class="social-link-item">
+            <a href="https://instagram.com/sagne191" target="_blank" rel="noopener noreferrer">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              Instagram (sagne191)
+            </a>
+          </li>
+
+          <!-- TikTok -->
+          <li class="social-link-item">
+            <a href="https://tiktok.com/@sagne.forever" target="_blank" rel="noopener noreferrer">
+              <svg class="social-icon" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.57-1.33 1.52-1.32 2.52.01.99.53 1.93 1.35 2.49.82.57 1.92.68 2.87.32.96-.36 1.68-1.23 1.83-2.24.08-.73.06-1.47.06-2.2V.02z"/></svg>
+              TikTok (sagne.forever)
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Column Services -->
+      <div class="footer-right">
+        <div class="footer-col-title">Services</div>
+        <div class="social-links-list">
+          <p style="color: #555; font-size: 15px; line-height: 1.6;">
+            • Full-Stack Web Development<br>
+            • Custom SaaS Platforms<br>
+            • AI Integrations & Workflows<br>
+            • Real-Time Interactive Applications
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    // Mouse Glow Movement
+    const glow = document.getElementById('glow');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let glowX = mouseX;
+    let glowY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animate() {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+
+      glow.style.left = `${glowX}px`;
+      glow.style.top = `${glowY}px`;
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Dynamic Navigation Header Color Toggle on Scroll
+    const navbar = document.getElementById('navbar');
+    const darkSections = document.querySelectorAll('.projects-section, .dark-section');
+
+    const observerOptions = {
+      root: null,
+      threshold: 0.3
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navbar.classList.add('dark-nav');
+        } else {
+          navbar.classList.remove('dark-nav');
+        }
+      });
+    }, observerOptions);
+
+    darkSections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
