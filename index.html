@@ -193,6 +193,107 @@
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
     }
 
+    /* About Me Section */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-glow {
+      position: absolute;
+      right: -150px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--accent-yellow) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .about-heading {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      color: var(--text-color);
+    }
+
+    .about-text p {
+      font-size: 17px;
+      line-height: 1.7;
+      color: #333333;
+      margin-bottom: 18px;
+      max-width: 560px;
+    }
+
+    .about-facts {
+      display: flex;
+      gap: 16px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .about-facts .stat-card {
+      flex: 1;
+      min-width: 150px;
+      padding: 18px;
+    }
+
+    .about-facts .stat-number {
+      font-size: 16px;
+    }
+
+    .about-photos {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-img {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .about-img-tall { height: 320px; }
+    .about-img-short { height: 180px; }
+
+    .about-badge {
+      background-color: var(--highlight-yellow);
+      border-radius: 10px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .about-badge .badge-tag {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #555550;
+      font-weight: 700;
+    }
+
+    .about-badge .badge-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: #111111;
+      letter-spacing: -0.5px;
+    }
+
     /* Page 2: Projects Showcase */
     .projects-section {
       background-color: #050505;
@@ -647,6 +748,8 @@
       .project-tag { position: relative; top: 0; right: 0; display: inline-block; margin-bottom: 12px; }
       .title, .dark-title, .footer-left h2, .projects-header h2 { font-size: 34px; }
       .grid-section { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-img-tall { height: 260px; }
       .tech-grid { grid-template-columns: repeat(2, 1fr); }
       .stats-banner { flex-direction: column; }
       header { padding: 20px; }
@@ -670,6 +773,7 @@
       <span class="logo-icon">⁚%</span> Sagne's Portfolio
     </a>
     <nav>
+      <a href="#about">About</a>
       <a href="#work">Work</a>
       <a href="#solutions">Solutions</a>
       <a href="#contact">Contact</a>
@@ -681,7 +785,7 @@
   <section class="page-section">
     <div class="container hero">
       <div class="hero-text">
-        <div class="subtitle">ABOUT ME</div>
+        <div class="subtitle">WELCOME</div>
         <h1 class="title">Full-Stack Web and Mobile Application Developer</h1>
         <p class="hero-desc">
           Hi, I'm <strong>Sagne Mieso</strong> — a third-year IT student at Jimma University, curious and dedicated
@@ -690,6 +794,52 @@
       </div>
       <div class="hero-image-container">
         <img src="assets/mypic.jpg" alt="Sagne Mieso">
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section class="page-section" id="about">
+    <div class="about-glow"></div>
+    <div class="container about-grid">
+      <div class="about-text">
+        <div class="subtitle">ABOUT ME</div>
+        <h2 class="about-heading">Who Am I?</h2>
+        <p>
+          I'm Sagne Mieso, a third-year Information Technology student at Jimma University. What started as
+          curiosity about how apps and websites work has grown into a passion for building them.
+        </p>
+        <p>
+          I spend most of my time learning by doing — developing full-stack web applications with React and
+          Node.js, exploring mobile development with Flutter, and constantly picking up new tools. I'm a curious
+          and dedicated learner who believes the best way to master something is to build with it.
+        </p>
+        <p>
+          Right now, I'm open to internships, freelance projects, and collaborations where I can contribute,
+          learn, and grow.
+        </p>
+        <div class="about-facts">
+          <div class="stat-card">
+            <div class="stat-number">3RD YEAR</div>
+            <div class="stat-label">IT STUDENT</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">JIMMA UNIVERSITY</div>
+            <div class="stat-label">BSC INFORMATION TECHNOLOGY</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">FULL-STACK</div>
+            <div class="stat-label">WEB &amp; MOBILE FOCUS</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-photos">
+        <img src="assets/mypic.jpg" alt="Sagne Mieso" class="about-img about-img-tall">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Coding workspace" class="about-img about-img-short">
+        <div class="about-badge">
+          <span class="badge-tag">EXPECTED GRADUATION</span>
+          <span class="badge-value">CLASS OF 2028</span>
+        </div>
       </div>
     </div>
   </section>
